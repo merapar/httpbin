@@ -14,6 +14,7 @@ import random
 import time
 import uuid
 import argparse
+import socket
 
 from flask import (
     Flask,
@@ -90,12 +91,20 @@ app.add_template_global("HTTPBIN_TRACKING" in os.environ, name="tracking_enabled
 
 app.config["SWAGGER"] = {"title": "httpbin.org", "uiversion": 3}
 
+ipaddress = socket.gethostbyname(socket.gethostname())
+lastoct = ipaddress.split(".")[-1]
+pos = int(lastoct) % 3
+t = (0,0,0)
+lst = list(t)
+lst[pos] = int(lastoct * 100)
+t = tuple(lst)
+
 template = {
     "swagger": "2.0",
     "info": {
-        "title": "httpbin.org",
+        "title": "httpbin.org - Server IP: " + ipaddress,
         "description": (
-            "A simple HTTP Request & Response Service."
+            "Our simple HTTP Request & Response Service. DEPLOYMENT GROUP: <span style=\"background-color:rgb" + str(t) + "; font-size: 95px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>"
             "<br/> <br/> <b>Run locally: </b> <code>$ docker run -p 80:80 kennethreitz/httpbin</code>"
         ),
         "contact": {
@@ -327,6 +336,21 @@ def view_uuid():
     """
 
     return jsonify(uuid=str(uuid.uuid4()))
+
+@app.route("/serviceip")
+def view_serviceip():
+    """Return the local IP  of the service.
+    ---
+    tags:
+      - Dynamic data
+    produces:
+      - application/json
+    responses:
+      200:
+        description: The service local IP address.
+    """
+
+    return jsonify(serviceip=ipaddress, hostname=socket.gethostname())
 
 
 @app.route("/headers")
