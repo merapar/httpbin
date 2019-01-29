@@ -1,14 +1,20 @@
 # httpbin(1): HTTP Request & Response Service
 
 
-A [Kenneth Reitz](http://kennethreitz.org/bitcoin) Project.
+A forked [Kenneth Reitz](http://kennethreitz.org/bitcoin) Project.
 
 ![ice cream](http://farm1.staticflickr.com/572/32514669683_4daf2ab7bc_k_d.jpg)
 
+
+Build locally:
+```sh
+docker build -t merapar/httpbin .
+```
+
 Run locally:
 ```sh
-docker pull kennethreitz/httpbin
-docker run -p 80:80 kennethreitz/httpbin
+docker pull merapar/httpbin
+docker run -p 80:80 merapar/httpbin
 ```
 
 See http://httpbin.org for more information.
