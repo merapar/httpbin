@@ -21,15 +21,18 @@ metadata:
   name: pipeline-httpbin
   labels:
     app: pipeline-httpbin
+    name: pipeline-httpbin
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: pipeline-httpbin
+      name: pipeline-httpbin
   template:
     metadata:
       labels:
         app: pipeline-httpbin
+        name: pipeline-httpbin
     spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
