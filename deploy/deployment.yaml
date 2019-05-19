@@ -2,14 +2,18 @@ kind: Service
 apiVersion: v1
 metadata:
   name: pipeline-httpbin-service
+  labels:
+    name: pipeline-httpbin-service 
 spec:
   selector:
     app: pipeline-httpbin
-  type: NodePort
+    name: pipeline-httpbin
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+      name: httpbin
 ---
 apiVersion: apps/v1
 kind: Deployment
