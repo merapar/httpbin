@@ -1,3 +1,4 @@
+stages:
 - name: build
   steps:
   - runScriptConfig:
