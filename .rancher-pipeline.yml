@@ -1,2 +1,21 @@
+- name: build
+  steps:
+  - runScriptConfig:
+      image: python:3.6-alpine
+      shellScript: |-
+        mkdir -p /usr/src/github.com/merapar
+        ln -s `pwd` /usr/src/github.com/merapar/httpbin
+        cd /usr/src/github.com/merapar/httpbin
+        ls -l -h -tr
+- name: push
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: merapar-httpbin:${CICD_EXECUTION_SEQUENCE}
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deploy/deployment.yaml
 timeout: 60
 notification: {}
