@@ -7,7 +7,7 @@ stages:
         mkdir -p /usr/src/github.com/merapar
         ln -s `pwd` /usr/src/github.com/merapar/httpbin
         cd /usr/src/github.com/merapar/httpbin
-        ls -l -h -tr
+        ls -la -h -tr
 - name: push
   steps:
   - publishImageConfig:
