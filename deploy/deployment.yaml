@@ -38,7 +38,7 @@ spec:
       - name: pipeline-docker-registry
       containers:
       - name: pipeline-httpbin
-        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}-${CICD_GIT_COMMIT}
         ports:
         - containerPort: 80
 
